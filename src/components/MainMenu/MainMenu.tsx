@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react'
 import { Menu, MenuProps } from 'antd'
 import { useLocation, Link } from 'react-router-dom'
-import { DashboardOutlined, CheckOutlined, UnorderedListOutlined } from '@ant-design/icons'
+import { CheckOutlined } from '@ant-design/icons'
 
 import styles from './MainMenu.module.scss'
 
@@ -21,12 +21,7 @@ const getItem = (label: React.ReactNode, key: React.Key, icon?: React.ReactNode,
 const iconStyleDark = { fontSize: 20, color: 'rgba(255, 255, 255, 0.85)' }
 const iconStyleLight = { fontSize: 20, color: 'rgba(21,21,21,0.85)' }
 
-const items = (iconStyle: CSSProperties): MenuItem[] => [
-  getItem('Admin', AppRoutes.admin, <DashboardOutlined style={iconStyle} />, [
-    getItem(<Link to={AppRoutes.applications}>Application list</Link>, AppRoutes.applications, <UnorderedListOutlined style={iconStyle} />)
-  ]),
-  getItem(<Link to={AppRoutes.apply}>Apply</Link>, AppRoutes.apply, <CheckOutlined style={iconStyle} />)
-]
+const items = (iconStyle: CSSProperties): MenuItem[] => [getItem(<Link to={AppRoutes.apply}>Apply</Link>, AppRoutes.apply, <CheckOutlined style={iconStyle} />)]
 
 type Props = {
   mode: 'horizontal' | 'inline'
