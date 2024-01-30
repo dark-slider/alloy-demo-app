@@ -1,26 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { LoadingOutlined } from '@ant-design/icons'
+import { Layout } from 'components'
+import { AppRoutes } from './app-routes'
+
+const ApplicationsList = lazy(() => import('features/applications/pages/ApplicationsList'))
+const CreateApplication = lazy(() => import('features/applications/pages/CreateApplication'))
+const ResultPage = lazy(() => import('components/ResultPage'))
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Suspense fallback={<LoadingOutlined />}>
+        <Routes>
+          <Route path={AppRoutes.main} element={<Layout>Hi there</Layout>} />
+          <Route
+            path={AppRoutes.admin}
+            element={
+              <Layout menuPosition="inline">
+                <ApplicationsList />
+              </Layout>
+            }
+          />
+          <Route
+            path={AppRoutes.applications}
+            element={
+              <Layout menuPosition="inline">
+                <ApplicationsList />
+              </Layout>
+            }
+          />
+          <Route
+            path={AppRoutes.apply}
+            element={
+              <Layout>
+                <CreateApplication />
+              </Layout>
+            }
+          />
+          <Route
+            path={AppRoutes.success}
+            element={
+              <Layout>
+                <ResultPage type="success" />
+              </Layout>
+            }
+          />
+          <Route
+            path={AppRoutes.denied}
+            element={
+              <Layout>
+                <ResultPage type="denied" />
+              </Layout>
+            }
+          />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
